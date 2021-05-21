@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-3">Username:</div>
+      <div class="col-md-3">
+        <input type="text" [(ngModel)]="loginForm.username"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">Password:</div>
+      <div class="col-md-3">
+        <input type="password" [(ngModel)]="loginForm.password"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">Password:</div>
+      <div class="col-md-3">
+        <input type="password" [(ngModel)]="loginForm.confirmPassword"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4" style="position: center">
+        <button class="btn btn-primary" style="position: relative;left: 40%;">
+          Save
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
