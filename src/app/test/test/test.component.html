@@ -1,30 +1,61 @@
 <div class="container">
-  <div class="form-group">
+  <form [formGroup]="registrationFrom">
     <div class="row">
       <div class="col-md-3">Username:</div>
       <div class="col-md-3">
-        <input type="text" [(ngModel)]="loginForm.username"/>
+        <input formControlName="username" id="username" type="text"/>
+
+        <div *ngIf="username.invalid && username.touched"
+             class="text-danger">
+          <div *ngIf="username.errors?.required">
+            Username is required.
+          </div>
+          <div *ngIf="username.errors?.minlength">
+            Username must be 4 characters.
+          </div>
+          <div *ngIf="username.errors?.forbiddenName">
+            Username: {{username.errors.forbiddenName.value}} is invalid.
+          </div>
+        </div>
+
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">Password:</div>
-      <div class="col-md-3">
-        <input type="password" [(ngModel)]="loginForm.password"/>
+      <div class="row">
+        <div class="col-md-3">Password:</div>
+        <div class="col-md-3">
+          <input formControlName="password" type="password"/>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">Password:</div>
-      <div class="col-md-3">
-        <input type="password" [(ngModel)]="loginForm.confirmPassword"/>
+      <div class="row">
+        <div class="col-md-3">Password:</div>
+        <div class="col-md-3">
+          <input formControlName="confirmPassword" type="password"/>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4" style="position: center">
-        <button class="btn btn-primary" style="position: relative;left: 40%;">
-          Save
-        </button>
+
+      <div formGroupName="address">
+        <div class="row">
+          <div class="col-md-3">City:</div>
+          <div class="col-md-3">
+            <input formControlName="city" type="text"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Country:</div>
+          <div class="col-md-3">
+            <input formControlName="country" type="text"/>
+          </div>
+        </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-4" style="position: center">
+          <button (click)="register()" class="btn btn-primary" style="position: relative;left: 40%;">
+            Save
+          </button>
+        </div>
+      </div>
+
     </div>
 
-  </div>
+  </form>
 </div>
