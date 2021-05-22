@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {UserLoginForm} from "../../services/test.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ConsoleLogService} from "../../services/console-log.service";
-import {forbiddenUsernameValidator} from "../../validators/username-validator";
+import {ForbiddenUsernameValidator} from "../../validators/username.validator";
+import {PasswordValidator} from "../../validators/password.validator";
 
 @Component({
   selector: 'app-test',
@@ -24,6 +25,10 @@ export class TestComponent implements OnInit {
     return this.registrationFrom.get('username');
   }
 
+  get email() {
+    return this.registrationFrom.get('email');
+  }
+
   ngOnInit(): void {
 
     // this.registrationFrom = new FormGroup({
@@ -37,20 +42,32 @@ export class TestComponent implements OnInit {
     // });
 
     this.registrationFrom = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(4), forbiddenUsernameValidator(/admin/)]],
-      password: [''],
-      confirmPassword: [''],
+      username: ['', [Validators.required, Validators.minLength(4), ForbiddenUsernameValidator(/admin/)]],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      email: [''],
+      subscribe: [false],
       address: this.formBuilder.group({
         city: [''],
         country: ['']
       })
+    }, {validator: PasswordValidator});
+
+    this.registrationFrom.get('subscribe')?.valueChanges.subscribe(valueChecked => {
+      const email = this.registrationFrom.get('email');
+      if (valueChecked) {
+        email?.setValidators(Validators.required);
+      } else {
+        email?.clearValidators();
+      }
+      email?.updateValueAndValidity();
     });
 
     this.refreshPage();
   }
 
   refreshPage(): void {
-    this.loginForm = new UserLoginForm('', 'password', 'password', '', '');
+    this.loginForm = new UserLoginForm('', '', '', '', '');
     this.loadLoginForm(this.loginForm);
   }
 

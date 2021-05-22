@@ -1,22 +1,27 @@
 <div class="container">
   <form [formGroup]="registrationFrom">
-    <div class="row">
-      <div class="col-md-3">Username:</div>
-      <div class="col-md-3">
-        <input formControlName="username" id="username" type="text"/>
-
-        <div *ngIf="username.invalid && username.touched"
-             class="text-danger">
-          <div *ngIf="username.errors?.required">
-            Username is required.
-          </div>
-          <div *ngIf="username.errors?.minlength">
-            Username must be 4 characters.
-          </div>
-          <div *ngIf="username.errors?.forbiddenName">
-            Username: {{username.errors.forbiddenName.value}} is invalid.
+    <div class="form-control">
+      <div class="row">
+        <div class="col-md-3">Username:</div>
+        <div class="col-md-3">
+          <input
+            [class.invalid]="registrationFrom.controls.username.invalid && registrationFrom.controls.username.touched"
+            formControlName="username" id="username"
+            type="text"/>
+          <div *ngIf="username.invalid && username.touched"
+               class="text-danger">
+            <div *ngIf="username.errors?.required">
+              Username is required.
+            </div>
+            <div *ngIf="username.errors?.minlength">
+              Username must be 4 characters.
+            </div>
+            <div *ngIf="username.errors?.forbiddenName">
+              Username: {{username.errors.forbiddenName.value}} is invalid.
+            </div>
           </div>
         </div>
+
 
       </div>
       <div class="row">
@@ -28,7 +33,31 @@
       <div class="row">
         <div class="col-md-3">Password:</div>
         <div class="col-md-3">
-          <input formControlName="confirmPassword" type="password"/>
+          <input [class.invalid]="registrationFrom.errors?.mismatch" formControlName="confirmPassword" type="password"/>
+          <div *ngIf="registrationFrom.errors?.mismatch" class="text-danger">
+            Password do not match.
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">Email:</div>
+        <div class="col-md-3">
+          <input [class.invalid]="registrationFrom.controls.email.invalid && registrationFrom.controls.email.touched"
+                 formControlName="email" type="email"/>
+
+          <div *ngIf="email.invalid && email.touched" class="text-danger">
+            <div *ngIf="email.errors?.required">
+              Email is required.
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-check mb-3">
+          <input class="form-check-input" formControlName="subscribe" type="checkbox">
+          <label class="form-check-label">Send me offers</label>
         </div>
       </div>
 
@@ -49,7 +78,8 @@
 
       <div class="row">
         <div class="col-md-4" style="position: center">
-          <button (click)="register()" class="btn btn-primary" style="position: relative;left: 40%;">
+          <button (click)="register()" [disabled]="registrationFrom.invalid" class="btn btn-primary"
+                  style="position: relative;left: 40%;">
             Save
           </button>
         </div>
