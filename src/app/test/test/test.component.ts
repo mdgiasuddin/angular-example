@@ -5,6 +5,7 @@ import {ConsoleLogService} from "../../services/console-log.service";
 import {ForbiddenUsernameValidator} from "../../validators/username.validator";
 import {PasswordValidator} from "../../validators/password.validator";
 
+
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -17,7 +18,7 @@ export class TestComponent implements OnInit {
 
   constructor(
     private consoleLogService: ConsoleLogService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
   }
 
