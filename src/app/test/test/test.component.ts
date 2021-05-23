@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ConsoleLogService} from "../../services/console-log.service";
 import {ForbiddenUsernameValidator} from "../../validators/username.validator";
 import {PasswordValidator} from "../../validators/password.validator";
+import {Student, StudentService} from "../../services/student.service";
 
 
 @Component({
@@ -15,10 +16,12 @@ export class TestComponent implements OnInit {
 
   loginForm: UserLoginForm;
   registrationFrom: FormGroup;
+  studentList: Student[];
 
   constructor(
     private consoleLogService: ConsoleLogService,
     private formBuilder: FormBuilder,
+    private studentService: StudentService
   ) {
   }
 
@@ -70,6 +73,15 @@ export class TestComponent implements OnInit {
   refreshPage(): void {
     this.loginForm = new UserLoginForm('', '', '', '', '');
     this.loadLoginForm(this.loginForm);
+    this.getAllStudentList();
+
+  }
+
+  getAllStudentList(): void {
+    this.studentService.getAllStudent().subscribe(data => {
+      this.consoleLogService.logWithMessage('Student list', data);
+      this.studentList = data;
+    });
   }
 
   loadLoginForm(loginForm: UserLoginForm): void {
