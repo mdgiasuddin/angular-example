@@ -9,12 +9,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from "./material/material.module";
 import {MatDemoComponent} from './test/mat-demo/mat-demo.component';
 import {HttpClientModule} from "@angular/common/http";
+import {StudentComponent} from './test/student/student.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestComponent,
-    MatDemoComponent
+    MatDemoComponent,
+    StudentComponent
   ],
   imports: [
     BrowserModule,

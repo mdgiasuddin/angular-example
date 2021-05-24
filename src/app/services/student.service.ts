@@ -7,9 +7,9 @@ export class Student {
     public name: string,
     public schoolName: string,
     public classId: string,
-    public schoolRollNo: number,
-    public rollNo: number,
-    public regNo: number
+    public schoolRollNo: any,
+    public rollNo: any,
+    public regNo: any
   ) {
   }
 }
