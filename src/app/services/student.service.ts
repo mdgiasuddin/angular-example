@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {map} from "rxjs/operators";
 
 export class Student {
   constructor(
@@ -28,5 +29,16 @@ export class StudentService {
 
   getAllStudent(): any {
     return this.httpClient.get<Student[]>(this.url + 'angular/api/student/all');
+  }
+
+  downloadExcelFile(fileName: string): any {
+    // return this.httpClient.get<Student[]>(this.url + 'api/excel/download/test/' + fileName);
+
+    return this.httpClient.get(this.url + 'api/excel/download/test/test.xlsx', {responseType: 'blob'}).pipe(map((response: Blob) => {
+      return {
+        filename: fileName,
+        data: response
+      };
+    }));
   }
 }

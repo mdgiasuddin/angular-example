@@ -78,7 +78,7 @@ export class TestComponent implements OnInit {
   }
 
   getAllStudentList(): void {
-    this.studentService.getAllStudent().subscribe(data => {
+    this.studentService.getAllStudent().subscribe((data: Student[]) => {
       this.consoleLogService.logWithMessage('Student list', data);
       this.studentList = data;
     });
@@ -103,6 +103,33 @@ export class TestComponent implements OnInit {
       , formValue.confirmPassword, formValue.address.city, formValue.address.country);
     this.consoleLogService.logWithMessage('login form', this.loginForm);
   }
+
+  // downloadExcel(): void {
+  downloadExcel(): void {
+    const filename = 'test.xlsx';
+    this.studentService.downloadExcelFile(filename).subscribe(response => {
+
+      this.consoleLogService.logWithMessage('File response', response);
+      const binaryData = [];
+      binaryData.push(response.data);
+      const url = window.URL.createObjectURL(new Blob(binaryData, {type: "application/xlsx"}));
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.setAttribute('target', 'blank');
+      a.href = url;
+      a.download = response.filename;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+
+    }, error => {
+
+      console.log(error);
+    });
+  }
+
+  // }
 
 
 }
