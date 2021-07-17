@@ -112,7 +112,7 @@ export class TestComponent implements OnInit {
       this.consoleLogService.logWithMessage('File response', response);
       const binaryData = [];
       binaryData.push(response.data);
-      const url = window.URL.createObjectURL(new Blob(binaryData, {type: "application/xlsx"}));
+      const url = window.URL.createObjectURL(new Blob(binaryData, {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}));
       const a = document.createElement('a');
       document.body.appendChild(a);
       a.setAttribute('style', 'display: none');
